@@ -40,12 +40,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             Log.e("Notification","Ringer",e)
         }
 
-       /* try {
+        try {
             showNotification(remoteMessage.data["title"], remoteMessage.data["message"])
         } catch (e: Exception) {
             //println("$tag error -->${e.localizedMessage}")
             Log.e(TAG,e.localizedMessage)
-        }*/
+        }
     }
 
     private fun showNotification(
