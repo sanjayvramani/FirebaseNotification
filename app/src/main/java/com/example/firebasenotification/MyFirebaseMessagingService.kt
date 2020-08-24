@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
@@ -25,12 +26,26 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
+
+
+        var mediaPlayer = MediaPlayer()
         try {
+            var afd = assets.openFd("ringer.mp3")
+            mediaPlayer.setDataSource(afd.fileDescriptor)
+            mediaPlayer.prepare()
+            mediaPlayer.start()
+        }
+        catch (e : Exception)
+        {
+            Log.e("Notification","Ringer",e)
+        }
+
+       /* try {
             showNotification(remoteMessage.data["title"], remoteMessage.data["message"])
         } catch (e: Exception) {
             //println("$tag error -->${e.localizedMessage}")
             Log.e(TAG,e.localizedMessage)
-        }
+        }*/
     }
 
     private fun showNotification(
@@ -66,7 +81,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setAutoCancel(true)
             .setSound(soundUri)
             .setContentIntent(pendingIntent)
-
         notificationManager.notify(0, notificationBuilder.build())
     }
 
@@ -75,9 +89,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         channelId: String,
         channelName: String,
         notificationManager: NotificationManager
-    ) {
-
-        val channel = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_LOW)
+    ) { val channel = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_LOW)
         channel.enableLights(true)
         channel.lightColor = Color.GREEN
         channel.enableVibration(true)
