@@ -77,8 +77,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         notificationManager: NotificationManager
     ) {
 
-        val channel =
-            NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_LOW)
+        val channel = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_LOW)
         channel.enableLights(true)
         channel.lightColor = Color.GREEN
         channel.enableVibration(true)
